@@ -1,15 +1,15 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   optimization: {
     minimize: true,
   },
-  target: "webworker",
+  target: 'webworker',
   output: {
-    filename: "index.js",
-    path: path.resolve(__dirname, "bin"),
-    libraryTarget: "this",
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'bin'),
+    libraryTarget: 'this',
   },
   module: {
     rules: [
@@ -26,20 +26,20 @@ module.exports = {
   ],
   resolve: {
     fallback: {
-      "buffer": require.resolve("buffer/"),
-      "crypto": require.resolve("crypto-browserify"),
-      "events": require.resolve("events/"),
-      "stream": require.resolve("stream-browserify"),
-    }
+      buffer: require.resolve('buffer/'),
+      crypto: require.resolve('crypto-browserify'),
+      events: require.resolve('events/'),
+      stream: require.resolve('stream-browserify'),
+    },
   },
   externals: [
-    ({request,}, callback) => {
+    ({ request }, callback) => {
       // Allow Webpack to handle fastly:* namespaced module imports by treating
       // them as modules rather than try to process them as URLs
       if (/^fastly:.*$/.test(request)) {
         return callback(null, 'commonjs ' + request);
       }
       callback();
-    }
+    },
   ],
 };
